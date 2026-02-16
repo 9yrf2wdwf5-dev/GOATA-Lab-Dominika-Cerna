@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EDITUJ: Název / Jméno – minimalistický web</title>
+  <meta name="description" content="EDITUJ: Krátký popis toho, co děláš." />
+
+  <style>
+    :root{
+      /* Teplé světlé tóny + seriózní kontrast */
+      --bg: #fbf7f0;          /* teplá slonová kost */
+      --card: #ffffff;
+      --text: #1f2430;        /* tmavá modro-šedá (seriózní) */
+      --muted: #5b6474;
+      --line: rgba(31,36,48,.10);
+      --accent: #c07a52;      /* jemná terakota */
+      --accent-2: #e7c7a4;    /* písková */
+      --shadow: 0 10px 30px rgba(31,36,48,.08);
+      --radius: 18px;
+      --max: 980px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(231,199,164,.45), transparent 60%),
+        radial-gradient(900px 500px at 85% 15%, rgba(192,122,82,.18), transparent 60%),
+        var(--bg);
+      line-height:1.55;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:26px 18px 80px}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      position:sticky; top:0;
+      padding:14px 0;
+      backdrop-filter: blur(8px);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px; text-decoration:none;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, var(--accent-2), rgba(192,122,82,.35));
+      border:1px solid var(--line);
+      box-shadow: 0 6px 16px rgba(31,36,48,.07);
+    }
+    .brand b{font-weight:650}
+    .nav{
+      display:flex; gap:14px; flex-wrap:wrap;
+      font-size:14px;
+    }
+    .nav a{
+      text-decoration:none;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid transparent;
+      color:var(--muted);
+    }
+    .nav a:hover{border-color:var(--line); color:var(--text); background:rgba(255,255,255,.55)}
+
+    .hero{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 860px){
+      .hero{grid-template-columns:1fr}
+      .topbar{position:static}
+    }
+
+    .card{
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-left{padding:28px}
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:13px; color:var(--muted);
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.55);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(192,122,82,.16);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:42px;
+      letter-spacing:-.02em;
+      line-height:1.12;
+    }
+    @media (max-width: 520px){ h1{font-size:34px} }
+    .lead{color:var(--muted); font-size:16px; margin:0 0 18px}
+    .cta{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      background:rgba(255,255,255,.65);
+    }
+    .btn.primary{
+      border-color: rgba(192,122,82,.35);
+      background: linear-gradient(135deg, rgba(231,199,164,.65), rgba(192,122,82,.18));
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .meta{
+      display:grid; gap:10px;
+      padding:22px;
+    }
+    .meta h3{margin:0 0 4px; font-size:14px; color:var(--muted); font-weight:650}
+    .meta p{margin:0; font-size:14px}
+    .meta .item{
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.55);
+    }
+
+    section{margin-top:18px}
+    .section{
+      padding:22px;
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:-.01em;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 860px){ .grid3{grid-template-columns:1fr} }
+    .feature{
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,.55);
+    }
+    .feature b{display:block; margin-bottom:6px}
+    .feature p{margin:0; color:var(--muted); font-size:14px}
+
+    .two{
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 860px){ .two{grid-template-columns:1fr} }
+
+    .quote{
+      font-size:14px;
+      color:var(--muted);
+      border-left: 3px solid rgba(192,122,82,.55);
+      padding-left:12px;
+      margin:10px 0 0;
+    }
+
+    .contact{
+      display:grid; grid-template-columns:1.2fr .8fr; gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 860px){ .contact{grid-template-columns:1fr} }
+
+    form{
+      display:grid; gap:10px;
+    }
+    label{font-size:13px; color:var(--muted)}
+    input, textarea{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.7);
+      font:inherit;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .small{font-size:12px; color:var(--muted)}
+
+    footer{
+      margin-top:22px;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    /* jemný scroll pro kotvy */
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="#top">
+        <span class="logo" aria-hidden="true"></span>
+        <span><b>EDITUJ: Název/Jméno</b></span>
+      </a>
+
+      <nav class="nav" aria-label="Navigace">
+        <a href="#o-mne">O mně</a>
+        <a href="#sluzby">Služby</a>
+        <a href="#prace">Jak pracuji</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+
+    <main id="top" class="hero">
+      <div class="card hero-left">
+        <div class="kicker"><span class="dot"></span> EDITUJ: Klidně, srozumitelně, profesionálně</div>
+        <h1>EDITUJ: Pomáhám lidem a firmám<br/>s <span style="color:var(--accent)">[tvojí oblastí]</span>.</h1>
+        <p class="lead">
+          EDITUJ: Tady napiš 1–2 věty, co nabízíš a pro koho. Drž to jednoduché a lidské.
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="#kontakt">Napsat zprávu</a>
+          <a class="btn" href="#sluzby">Zobrazit služby</a>
+        </div>
+
+        <p class="quote">„EDITUJ: Krátká věta, která vystihne přístup (např. důraz na kvalitu, důvěru, domluvu).“</p>
+      </div>
+
+      <aside class="card meta" aria-label="Rychlé info">
+        <div class="item">
+          <h3>EDITUJ: Lokalita</h3>
+          <p>Online / EDITUJ: Město</p>
+        </div>
+        <div class="item">
+          <h3>EDITUJ: Dostupnost</h3>
+          <p>Po–Pá, dle domluvy</p>
+        </div>
+        <div class="item">
+          <h3>EDITUJ: Kontakt</h3>
+          <p>
+            <a href="mailto:edituj@domena.cz">edituj@domena.cz</a><br/>
+            <a href="tel:+420123456789">+420 123 456 789</a>
+          </p>
+        </div>
+      </aside>
+    </main>
+
+    <section id="o-mne" class="card section">
+      <h2>O mně</h2>
+      <div class="two">
+        <div>
+          <p class="lead" style="margin:0">
+            EDITUJ: Napiš krátký odstavec – kdo jsi, v čem jsi dobrý/á, komu pomáháš.
+            Ideálně 3–5 vět.
+          </p>
+          <p class="small" style="margin-top:10px">
+            Tip: Když nic nemáš, napiš „Jsem [role], zaměřuji se na [oblast] a dávám důraz na [2 hodnoty].“
+          </p>
+        </div>
+        <div class="feature">
+          <b>EDITUJ: Hodnoty</b>
+          <p>• Srozumitelnost • Spolehlivost • Lidský přístup</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sluzby" class="card section">
+      <h2>Služby</h2>
+      <p class="lead" style="margin:0">EDITUJ: Krátce vysvětli, co nabízíš. Bez zbytečných slov.</p>
+
+      <div class="grid3">
+        <div class="feature">
+          <b>EDITUJ: Služba 1</b>
+          <p>EDITUJ: 1–2 věty popisu. Co konkrétně klient dostane.</p>
+        </div>
+        <div class="feature">
+          <b>EDITUJ: Služba 2</b>
+          <p>EDITUJ: 1–2 věty popisu. Pro koho je to vhodné.</p>
+        </div>
+        <div class="feature">
+          <b>EDITUJ: Služba 3</b>
+          <p>EDITUJ: 1–2 věty popisu. Jaký je výsledek.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="prace" class="card section">
+      <h2>Jak pracuji</h2>
+      <div class="grid3">
+        <div class="feature">
+          <b>1) Domluva</b>
+          <p>EDITUJ: krátce – co si ujasníte na začátku.</p>
+        </div>
+        <div class="feature">
+          <b>2) Návrh</b>
+          <p>EDITUJ: krátce – jak bude vypadat postup a co dodáš.</p>
+        </div>
+        <div class="feature">
+          <b>3) Realizace</b>
+          <p>EDITUJ: krátce – jaké budou výstupy a předání.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="card section">
+      <h2>Kontakt</h2>
+      <p class="lead" style="margin:0">
+        EDITUJ: Napiš krátkou výzvu k akci (např. „Napište mi, co potřebujete, ozvu se do 24 hodin.“).
+      </p>
+
+      <div class="contact">
+        <div class="feature">
+          <b>Napište mi</b>
+          <!-- Pozn.: Tenhle formulář je „demo“ (bez backendu).
+               Pro reálné odesílání zdarma můžeš použít Formspree / Netlify Forms. -->
+          <form onsubmit="return demoSubmit(event)">
+            <div>
+              <label for="name">Jméno</label>
+              <input id="name" name="name" placeholder="Tvoje jméno" required />
+            </div>
+            <div>
+              <label for="email">E-mail</label>
+              <input id="email" name="email" type="email" placeholder="tvoje@email.cz" required />
+            </div>
+            <div>
+              <label for="msg">Zpráva</label>
+              <textarea id="msg" name="msg" placeholder="S čím pomoci?" required></textarea>
+            </div>
+            <button class="btn primary" type="submit">Odeslat (demo)</button>
+            <div class="small" id="formNote">Formulář je zatím zkušební – nic se nikam neodesílá.</div>
+          </form>
+        </div>
+
+        <div class="feature">
+          <b>Přímý kontakt</b>
+          <p style="margin:0; color:var(--muted); font-size:14px">
+            E-mail: <a href="mailto:edituj@domena.cz">edituj@domena.cz</a><br/>
+            Telefon: <a href="tel:+420123456789">+420 123 456 789</a><br/>
+            EDITUJ: IČO (volitelné)<br/>
+            EDITUJ: Adresa (volitelné)
+          </p>
+
+          <p class="small" style="margin-top:12px">
+            Tip: Až budeš chtít, přidáme GDPR text, cookies lištu a skutečné odesílání formuláře zdarma.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="y"></span> EDITUJ: Název/Jméno</div>
+      <div>
+        <a href="#top" style="text-decoration:none">Nahoru ↑</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // rok ve footeru
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // demo formulář
+    function demoSubmit(e){
+      e.preventDefault();
+      const note = document.getElementById("formNote");
+      note.textContent = "Díky! (Demo) Teď by se zpráva odeslala. Až budeš chtít, napojíme to zdarma přes Formspree/Netlify.";
+      return false;
+    }
+  </script>
+</body>
+</html>
