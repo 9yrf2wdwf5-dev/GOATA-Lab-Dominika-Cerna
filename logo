@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900">
+  <defs>
+    <style>
+      :root{
+        --beige:#E9DFC9;
+        --khaki:#AEBE8A;
+        --dark:#2B2B2B;
+      }
+      .bg { fill: var(--beige); }
+      .kh { fill: var(--khaki); }
+      .dk { fill: var(--dark); }
+      .stroke { stroke: var(--dark); stroke-width: 14; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .main { font-family: "Montserrat","Poppins","Inter","Arial",sans-serif; font-weight: 700; }
+      .sub  { font-family: "Montserrat","Poppins","Inter","Arial",sans-serif; font-weight: 500; }
+    </style>
+  </defs>
+
+  <!-- Pozadí (pro náhled; na webu můžeš klidně odstranit) -->
+  <rect x="0" y="0" width="900" height="900" class="bg"/>
+
+  <!-- IKONA (minimal): stylizované G + kapka -->
+  <g transform="translate(0,10)">
+    <!-- jemný kruh v khaki (čisté, decentní) -->
+    <circle cx="450" cy="240" r="140" class="kh" opacity="0.35"/>
+
+    <!-- G (oblouk) -->
+    <path d="M560 245
+             a 110 110 0 1 1 -86 -105"
+          class="stroke"/>
+    <!-- vodorovná linka pro čitelnost G -->
+    <path d="M560 245 h-80" class="stroke"/>
+
+    <!-- kapka/tečka jako "lab" akcent -->
+    <circle cx="585" cy="150" r="14" class="kh"/>
+  </g>
+
+  <!-- TEXT -->
+  <g text-anchor="middle">
+    <!-- Goata LAB -->
+    <text x="450" y="520" font-size="96" class="main dk" letter-spacing="0.5">
+      Goata <tspan class="kh" font-weight="800">LAB</tspan>
+    </text>
+
+    <!-- Dominika Černá -->
+    <text x="450" y="590" font-size="36" class="sub dk" opacity="0.95" letter-spacing="0.3">
+      Dominika Černá
+    </text>
+
+    <!-- jemná linka pod názvem (béžová tmavší / khaki) -->
+    <rect x="290" y="548" width="320" height="8" class="kh" opacity="0.55" rx="4"/>
+  </g>
+</svg>
